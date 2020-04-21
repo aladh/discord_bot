@@ -1,7 +1,6 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"os"
 )
@@ -24,7 +23,7 @@ func New() (*Config, error) {
 func getEnvString(name string) (string, error) {
 	value, exists := os.LookupEnv(name)
 	if !exists {
-		return "", errors.New(fmt.Sprintf("environment variable %s not found", name))
+		return "", fmt.Errorf("environment variable %s not found", name)
 	}
 
 	return value, nil
