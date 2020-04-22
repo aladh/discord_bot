@@ -21,7 +21,7 @@ func Handle(message *message.Message) {
 		return
 	}
 
-	err = reply.Edit(fmt.Sprintf("Pong! (%dms)", time.Now().Sub(timestamp).Milliseconds()))
+	err = reply.Edit(fmt.Sprintf("Pong! (%dms)", time.Since(timestamp).Milliseconds()))
 	if err != nil {
 		log.Printf("error editing message: %s\n", err)
 	}
