@@ -59,3 +59,12 @@ func (bot *Bot) SendMessage(channel string, content string) (*message.Message, e
 
 	return message.New(msg, bot), nil
 }
+
+func (bot *Bot) EditMessage(channel string, messageID string, content string) error {
+	_, err := bot.session.ChannelMessageEdit(channel, messageID, content)
+	if err != nil {
+		return fmt.Errorf("failed to edit message: %w", err)
+	}
+
+	return nil
+}
