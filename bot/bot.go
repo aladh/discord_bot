@@ -47,24 +47,6 @@ func (bot *Bot) AddCommand(command string, handler func(message *message.Message
 			return
 		}
 
-		handler(message.New(msg.Message, bot))
+		handler(message.New(msg.Message, bot.session))
 	})
-}
-
-func (bot *Bot) SendMessage(channel string, content string) (*message.Message, error) {
-	msg, err := bot.session.ChannelMessageSend(channel, content)
-	if err != nil {
-		return nil, fmt.Errorf("failed to send message: %w", err)
-	}
-
-	return message.New(msg, bot), nil
-}
-
-func (bot *Bot) EditMessage(channel string, messageID string, content string) error {
-	_, err := bot.session.ChannelMessageEdit(channel, messageID, content)
-	if err != nil {
-		return fmt.Errorf("failed to edit message: %w", err)
-	}
-
-	return nil
 }

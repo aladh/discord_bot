@@ -1,39 +1,33 @@
 package message
 
 import (
+	"fmt"
+
 	"github.com/bwmarrin/discordgo"
 )
 
 type Message struct {
 	*discordgo.Message
-	client Client
+	session *discordgo.Session
 }
 
-type Client interface {
-	SendMessage(channelID string, content string) (*Message, error)
-	EditMessage(channelID string, messageID string, content string) error
-}
-
-func New(message *discordgo.Message, client Client) *Message {
-	return &Message{
-		Message: message,
-		client:  client,
-	}
+func New(message *discordgo.Message, session *discordgo.Session) *Message {
+	return &Message{Message: message, session: session}
 }
 
 func (message *Message) Reply(content string) (*Message, error) {
-	msg, err := message.client.SendMessage(message.ChannelID, content)
+	msg, err := message.session.ChannelMessageSend(message.ChannelID, content)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to send message: %w", err)
 	}
 
-	return msg, nil
+	return New(msg, message.session), nil
 }
 
 func (message *Message) Edit(content string) error {
-	err := message.client.EditMessage(message.ChannelID, message.ID, content)
+	_, err := message.session.ChannelMessageEdit(message.ChannelID, message.ID, content)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to edit message: %w", err)
 	}
 
 	return nil
