@@ -8,7 +8,7 @@ import (
 	"github.com/ali-l/discord_bot_go/message"
 )
 
-func Handle(message *message.Message) {
+func Handler(message *message.Message) {
 	reply, err := message.Reply("Pong!")
 	if err != nil {
 		log.Println(err)

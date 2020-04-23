@@ -23,7 +23,7 @@ func main() {
 	}
 	defer bt.Stop()
 
-	bt.AddCommand("ping", ping.Handle)
+	bt.AddCommand("ping", ping.Handler)
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
