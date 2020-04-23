@@ -14,12 +14,12 @@ import (
 func main() {
 	cfg, err := config.New()
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Fatalln(err)
 	}
 
 	bt, err := bot.Start(cfg.DiscordToken)
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Fatalln(err)
 	}
 	defer bt.Stop()
 

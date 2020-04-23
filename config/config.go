@@ -12,12 +12,10 @@ type Config struct {
 func New() (*Config, error) {
 	discordToken, err := getEnvString("DISCORD_TOKEN")
 	if err != nil {
-		return nil, fmt.Errorf("failed to generate config: %w", err)
+		return nil, err
 	}
 
-	return &Config{
-		DiscordToken: discordToken,
-	}, nil
+	return &Config{DiscordToken: discordToken}, nil
 }
 
 func getEnvString(name string) (string, error) {
