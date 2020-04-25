@@ -15,7 +15,7 @@ const trackIDPattern = "open.spotify.com/track/([0-9A-Za-z_-]*)"
 
 type Client struct {
 	spotify.Client
-	playlistID   string
+	playlistID   spotify.ID
 	trackIDRegex *regexp.Regexp
 }
 
@@ -31,7 +31,7 @@ func New(clientID, clientSecret, refreshToken, playlistID string) *Client {
 
 	client := auth.NewClient(token)
 
-	return &Client{Client: client, playlistID: playlistID, trackIDRegex: regexp.MustCompile(trackIDPattern)}
+	return &Client{Client: client, playlistID: spotify.ID(playlistID), trackIDRegex: regexp.MustCompile(trackIDPattern)}
 }
 
 func (client *Client) PlaylistAdder(message *message.Message) {
@@ -40,7 +40,7 @@ func (client *Client) PlaylistAdder(message *message.Message) {
 		return
 	}
 
-	_, err = client.AddTracksToPlaylist(spotify.ID(client.playlistID), trackID)
+	_, err = client.AddTracksToPlaylist(client.playlistID, trackID)
 	if err != nil {
 		log.Println(err)
 	}
