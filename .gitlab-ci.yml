@@ -29,6 +29,7 @@ deploy:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE || true
+    - chmod +x deploy.sh
   script:
     - ./deploy.sh
   tags:
