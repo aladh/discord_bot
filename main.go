@@ -28,7 +28,7 @@ func main() {
 	bt.AddHandler(spotify.New(cfg.SpotifyClientID, cfg.SpotifyClientSecret, cfg.SpotifyRefreshToken, cfg.SpotifyPlaylistID).PlaylistAdder)
 
 	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 
 	<-stop
 }
