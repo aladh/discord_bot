@@ -20,16 +20,11 @@ type Client struct {
 }
 
 func New(clientID, clientSecret, refreshToken, playlistID string) *Client {
-	token := &oauth2.Token{
-		TokenType:    "Bearer",
-		RefreshToken: refreshToken,
-	}
-
 	auth := spotify.NewAuthenticator("", spotify.ScopePlaylistModifyPublic)
 
 	auth.SetAuthInfo(clientID, clientSecret)
 
-	client := auth.NewClient(token)
+	client := auth.NewClient(&oauth2.Token{TokenType: "Bearer", RefreshToken: refreshToken})
 
 	return &Client{Client: client, playlistID: spotify.ID(playlistID), trackIDRegex: regexp.MustCompile(trackIDPattern)}
 }
