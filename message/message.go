@@ -32,3 +32,12 @@ func (message *Message) Edit(content string) error {
 
 	return nil
 }
+
+func (message *Message) React(reaction string) error {
+	err := message.session.MessageReactionAdd(message.ChannelID, message.ID, reaction)
+	if err != nil {
+		return fmt.Errorf("error reacting to message: %w", err)
+	}
+
+	return nil
+}
