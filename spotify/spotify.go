@@ -40,7 +40,7 @@ func (client *Client) PlaylistAdder(message *message.Message) {
 		log.Println(err)
 	}
 
-	err = message.React("🎵")
+	err = message.React("✅")
 	if err != nil {
 		log.Println(err)
 	}
