@@ -12,4 +12,4 @@ docker run \
 -e SPOTIFY_PLAYLIST_ID=$SPOTIFY_PLAYLIST_ID \
 --name $NAME \
 --restart=on-failure \
-$CI_REGISTRY_IMAGE
+"$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
