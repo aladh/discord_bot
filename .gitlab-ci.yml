@@ -38,3 +38,4 @@ deploy:
     - deploy
   only:
     - master
+  when: manual
