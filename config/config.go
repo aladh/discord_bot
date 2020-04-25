@@ -6,7 +6,11 @@ import (
 )
 
 type Config struct {
-	DiscordToken string
+	DiscordToken        string
+	SpotifyClientID     string
+	SpotifyClientSecret string
+	SpotifyRefreshToken string
+	SpotifyPlaylistID   string
 }
 
 func New() (*Config, error) {
@@ -15,7 +19,33 @@ func New() (*Config, error) {
 		return nil, err
 	}
 
-	return &Config{DiscordToken: discordToken}, nil
+	spotifyClientID, err := getEnvString("SPOTIFY_CLIENT_ID")
+	if err != nil {
+		return nil, err
+	}
+
+	spotifyClientSecret, err := getEnvString("SPOTIFY_CLIENT_SECRET")
+	if err != nil {
+		return nil, err
+	}
+
+	spotifyRefreshToken, err := getEnvString("SPOTIFY_REFRESH_TOKEN")
+	if err != nil {
+		return nil, err
+	}
+
+	spotifyPlaylistID, err := getEnvString("SPOTIFY_PLAYLIST_ID")
+	if err != nil {
+		return nil, err
+	}
+
+	return &Config{
+		DiscordToken:        discordToken,
+		SpotifyClientID:     spotifyClientID,
+		SpotifyClientSecret: spotifyClientSecret,
+		SpotifyRefreshToken: spotifyRefreshToken,
+		SpotifyPlaylistID:   spotifyPlaylistID,
+	}, nil
 }
 
 func getEnvString(name string) (string, error) {

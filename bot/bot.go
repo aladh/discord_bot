@@ -50,3 +50,9 @@ func (bot *Bot) AddCommand(command string, handler func(message *message.Message
 		handler(message.New(msg.Message, bot.session))
 	})
 }
+
+func (bot *Bot) AddHandler(handler func(message *message.Message)) {
+	bot.session.AddHandler(func(_ *discordgo.Session, msg *discordgo.MessageCreate) {
+		handler(message.New(msg.Message, bot.session))
+	})
+}
