@@ -17,7 +17,7 @@ type Bot struct {
 }
 
 func Start(token string) (*Bot, error) {
-	session, err := discordgo.New(fmt.Sprintf("Bot %s", token))
+	session, err := discordgo.New("Bot " + token)
 	if err != nil {
 		return nil, fmt.Errorf("error initializng session: %w", err)
 	}
