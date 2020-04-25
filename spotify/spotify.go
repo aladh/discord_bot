@@ -39,11 +39,6 @@ func (client *Client) PlaylistAdder(message *message.Message) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	err = message.React("✅")
-	if err != nil {
-		log.Println(err)
-	}
 }
 
 func extractTrackID(trackIDRegex *regexp.Regexp, trackURL string) (spotify.ID, error) {
