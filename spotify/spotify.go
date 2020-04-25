@@ -52,7 +52,7 @@ func extractTrackID(trackIDRegex *regexp.Regexp, trackURL string) (spotify.ID, e
 
 	if numMatches > 0 {
 		return spotify.ID(matches[numMatches-1]), nil
-	} else {
-		return "", fmt.Errorf("track ID not found")
 	}
+
+	return "", fmt.Errorf("track ID not found")
 }
