@@ -43,7 +43,7 @@ func (bot *Bot) Stop() {
 
 func (bot *Bot) AddCommand(command string, handler func(message *message.Message)) {
 	bot.session.AddHandler(func(_ *discordgo.Session, msg *discordgo.MessageCreate) {
-		if !strings.HasPrefix(commandPrefix+command, msg.Content) {
+		if !strings.HasPrefix(msg.Content, commandPrefix+command) {
 			return
 		}
 
