@@ -2,6 +2,7 @@ stages:
   - test
   - build
   - deploy
+  - verify
 
 lint:
   stage: test
@@ -36,3 +37,11 @@ deploy:
     - deploy
   only:
     - master
+
+end-to-end:
+  stage: verify
+  image: golang:1.14-buster
+  script:
+    - go test main_test.go
+  only:
+    - schedules
