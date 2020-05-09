@@ -9,6 +9,8 @@ lint:
   image: golangci/golangci-lint:v1.25.0
   script:
     - golangci-lint run -v -E golint -E gofmt -E goconst -E interfacer -E gocritic -E gocognit -E gocyclo
+  except:
+    - schedules
 
 build:
   stage: build
@@ -23,6 +25,8 @@ build:
     - docker push $CI_REGISTRY_IMAGE
   only:
     - master
+  except:
+    - schedules
 
 deploy:
   stage: deploy
@@ -37,6 +41,8 @@ deploy:
     - deploy
   only:
     - master
+  except:
+    - schedules
 
 end-to-end:
   stage: verify
