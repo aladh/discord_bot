@@ -24,8 +24,8 @@ func main() {
 	}
 	defer bt.Stop()
 
-	bt.AddCommand("ping", ping.Handler)
-	bt.AddHandler(spotify.New(cfg.SpotifyClientID, cfg.SpotifyClientSecret, cfg.SpotifyRefreshToken, cfg.SpotifyPlaylistID).PlaylistAdder)
+	bt.AddCommand("ping", ping.ReplyWithLatency)
+	bt.AddHandler(spotify.New(cfg.SpotifyClientID, cfg.SpotifyClientSecret, cfg.SpotifyRefreshToken, cfg.SpotifyPlaylistID).AddToPlaylist)
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)

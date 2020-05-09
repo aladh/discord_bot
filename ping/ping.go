@@ -7,7 +7,7 @@ import (
 	"github.com/ali-l/discord_bot_go/message"
 )
 
-func Handler(message *message.Message) {
+func ReplyWithLatency(message *message.Message) {
 	reply, err := message.Reply("Pong!")
 	if err != nil {
 		log.Println(err)

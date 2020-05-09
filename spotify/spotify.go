@@ -29,7 +29,7 @@ func New(clientID, clientSecret, refreshToken, playlistID string) *Client {
 	return &Client{Client: client, playlistID: spotify.ID(playlistID), trackIDRegex: regexp.MustCompile(trackIDPattern)}
 }
 
-func (client *Client) PlaylistAdder(message *message.Message) {
+func (client *Client) AddToPlaylist(message *message.Message) {
 	trackID, err := extractTrackID(client.trackIDRegex, message.Content)
 	if err != nil {
 		return
