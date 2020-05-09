@@ -50,4 +50,4 @@ end-to-end:
   script:
     - go test main_test.go
   only:
-    - schedules
+    - master
