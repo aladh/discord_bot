@@ -40,8 +40,8 @@ func TestSpotifyAddToPlaylist(t *testing.T) {
 	}
 }
 
-func getLastTrack(t *testing.T, client spotify.Client, playlistId string) *spotify.FullTrack {
-	playlist, err := client.GetPlaylist(spotify.ID(playlistId))
+func getLastTrack(t *testing.T, client spotify.Client, playlistID string) *spotify.FullTrack {
+	playlist, err := client.GetPlaylist(spotify.ID(playlistID))
 	if err != nil {
 		t.Fatalf("error getting playlist: %s", err)
 	}
@@ -49,7 +49,7 @@ func getLastTrack(t *testing.T, client spotify.Client, playlistId string) *spoti
 	lastTrack := playlist.Tracks.Total - 1
 	limit := int(1)
 
-	tracks, err := client.GetPlaylistTracksOpt(spotify.ID(playlistId), &spotify.Options{Limit: &limit, Offset: &lastTrack}, "items(track(id,name))")
+	tracks, err := client.GetPlaylistTracksOpt(spotify.ID(playlistID), &spotify.Options{Limit: &limit, Offset: &lastTrack}, "items(track(id,name))")
 	if err != nil {
 		t.Fatalf("error getting playlist tracks: %s", err)
 	}
@@ -65,16 +65,16 @@ func createSpotifyClient(cfg *config.Config) spotify.Client {
 	return client
 }
 
-func sendAndDeleteSpotifyLink(t *testing.T, token string, channelId string, trackLink string) {
+func sendAndDeleteSpotifyLink(t *testing.T, token string, channelID string, trackLink string) {
 	session := createDiscordSession(t, token)
 	defer closeSession(session)
 
-	msg, err := session.ChannelMessageSend(channelId, trackLink)
+	msg, err := session.ChannelMessageSend(channelID, trackLink)
 	if err != nil {
 		t.Fatalf("error sending message: %s", err)
 	}
 
-	err = session.ChannelMessageDelete(channelId, msg.ID)
+	err = session.ChannelMessageDelete(channelID, msg.ID)
 	if err != nil {
 		t.Fatalf("error deleting message: %s", err)
 	}
