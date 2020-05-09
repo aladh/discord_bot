@@ -13,7 +13,7 @@ type Config struct {
 	SpotifyPlaylistID   string
 }
 
-func New() (*Config, error) {
+func FromEnv() (*Config, error) {
 	discordToken, err := getEnvString("DISCORD_TOKEN")
 	if err != nil {
 		return nil, err
