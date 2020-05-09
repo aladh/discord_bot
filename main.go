@@ -6,10 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ali-l/discord_bot_go/bot"
-	"github.com/ali-l/discord_bot_go/config"
-	"github.com/ali-l/discord_bot_go/ping"
-	"github.com/ali-l/discord_bot_go/spotify"
+	"github.com/ali-l/discord_bot/bot"
+	"github.com/ali-l/discord_bot/config"
+	"github.com/ali-l/discord_bot/ping"
+	"github.com/ali-l/discord_bot/spotify"
 )
 
 func main() {

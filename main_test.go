@@ -9,7 +9,7 @@ import (
 	"github.com/zmb3/spotify"
 	"golang.org/x/oauth2"
 
-	"github.com/ali-l/discord_bot_go/config"
+	"github.com/ali-l/discord_bot/config"
 )
 
 func TestSpotifyAddToPlaylist(t *testing.T) {

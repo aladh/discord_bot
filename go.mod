@@ -1,4 +1,4 @@
-module github.com/ali-l/discord_bot_go
+module github.com/ali-l/discord_bot
 
 go 1.14
 

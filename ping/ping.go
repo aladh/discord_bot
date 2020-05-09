@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ali-l/discord_bot_go/message"
+	"github.com/ali-l/discord_bot/message"
 )
 
 func ReplyWithLatency(message *message.Message) {
