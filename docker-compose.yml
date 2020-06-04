@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  discord_bot:
+    image: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+      SPOTIFY_REFRESH_TOKEN: ${SPOTIFY_REFRESH_TOKEN}
+      SPOTIFY_PLAYLIST_ID: ${SPOTIFY_PLAYLIST_ID}
+    restart: on-failure
