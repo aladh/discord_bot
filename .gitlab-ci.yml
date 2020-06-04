@@ -12,7 +12,7 @@ lint:
   except:
     - schedules
 
-image:
+container-image:
   stage: build
   image: docker:latest
   services:
