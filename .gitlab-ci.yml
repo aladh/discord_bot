@@ -12,7 +12,7 @@ lint:
   except:
     - schedules
 
-build:
+image:
   stage: build
   image: docker:latest
   services:
@@ -28,7 +28,7 @@ build:
   except:
     - schedules
 
-deploy:
+production:
   stage: deploy
   environment:
     name: production
