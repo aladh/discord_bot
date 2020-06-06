@@ -3,7 +3,10 @@ package bot
 import (
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 
 	"github.com/bwmarrin/discordgo"
 
@@ -16,20 +19,29 @@ type Bot struct {
 	session *discordgo.Session
 }
 
-func Start(token string) (*Bot, error) {
+func New(token string) (*Bot, error) {
 	session, err := discordgo.New("Bot " + token)
 	if err != nil {
 		return nil, fmt.Errorf("error initializng session: %w", err)
 	}
 
-	err = session.Open()
+	return &Bot{session}, nil
+}
+
+func (bot *Bot) Start() error {
+	err := bot.session.Open()
 	if err != nil {
-		return nil, fmt.Errorf("error opening connection: %w", err)
+		return fmt.Errorf("error opening connection: %w", err)
 	}
+	defer bot.Stop()
 
 	log.Println("Started bot")
 
-	return &Bot{session}, nil
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
+	<-stop
+
+	return nil
 }
 
 func (bot *Bot) Stop() {
