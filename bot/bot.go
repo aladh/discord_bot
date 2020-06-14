@@ -22,7 +22,7 @@ type Bot struct {
 func New(token string) (*Bot, error) {
 	session, err := discordgo.New("Bot " + token)
 	if err != nil {
-		return nil, fmt.Errorf("error initializng session: %w", err)
+		return nil, fmt.Errorf("error constructing session: %w", err)
 	}
 
 	return &Bot{session}, nil
@@ -31,9 +31,12 @@ func New(token string) (*Bot, error) {
 func (bot *Bot) Start() error {
 	err := bot.session.Open()
 	if err != nil {
-		return fmt.Errorf("error opening connection: %w", err)
+		return fmt.Errorf("error opening session: %w", err)
 	}
-	defer bot.Stop()
+	defer func() { err = bot.Stop() }()
+	if err != nil {
+		return err
+	}
 
 	log.Println("Started bot")
 
@@ -44,13 +47,15 @@ func (bot *Bot) Start() error {
 	return nil
 }
 
-func (bot *Bot) Stop() {
+func (bot *Bot) Stop() error {
 	err := bot.session.Close()
 	if err != nil {
-		log.Printf("error closing session: %s\n", err)
+		return fmt.Errorf("error closing session: %w", err)
 	}
 
 	log.Println("Stopped bot")
+
+	return nil
 }
 
 func (bot *Bot) AddCommand(command string, handler func(message *message.Message)) {
