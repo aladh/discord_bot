@@ -28,15 +28,12 @@ func New(token string) (*Bot, error) {
 	return &Bot{session}, nil
 }
 
-func (bot *Bot) Start() error {
-	err := bot.session.Open()
+func (bot *Bot) Start() (err error) {
+	err = bot.session.Open()
 	if err != nil {
 		return fmt.Errorf("error opening session: %w", err)
 	}
 	defer func() { err = bot.Stop() }()
-	if err != nil {
-		return err
-	}
 
 	log.Println("Started bot")
 
