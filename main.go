@@ -25,6 +25,6 @@ func main() {
 
 	err = bt.Start()
 	if err != nil {
-		log.Printf("error starting bot: %s\n", err)
+		log.Fatalf("error starting bot: %s\n", err)
 	}
 }
