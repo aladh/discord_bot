@@ -23,12 +23,12 @@ func TestSpotifyAddToPlaylist(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	sendAndDeleteSpotifyLink(t, cfg.DiscordToken, os.Getenv("DISCORD_CHANNEL_ID"), os.Getenv("SPOTIFY_TRACK_LINK"))
+	sendAndDeleteSpotifyLink(t, cfg.DiscordToken, os.Getenv("E2E_DISCORD_CHANNEL_ID"), os.Getenv("E2E_SPOTIFY_TRACK_LINK"))
 
 	spotifyClient := createSpotifyClient(cfg)
 
 	track := getLastTrack(t, spotifyClient, cfg.SpotifyPlaylistID)
-	expectedTrackName := os.Getenv("SPOTIFY_TRACK_NAME")
+	expectedTrackName := os.Getenv("E2E_SPOTIFY_TRACK_NAME")
 
 	if track.Name != expectedTrackName {
 		t.Fatalf("track = %s, want %s", track.Name, expectedTrackName)
