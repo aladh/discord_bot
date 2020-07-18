@@ -50,6 +50,6 @@ end-to-end:
   variables:
     ENABLE_E2E_TESTS: 'true'
   script:
-    - go test main_test.go
+    - go test -v main_test.go
   only:
     - master
