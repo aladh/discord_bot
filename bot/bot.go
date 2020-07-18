@@ -25,6 +25,8 @@ func New(token string) (*Bot, error) {
 		return nil, fmt.Errorf("error constructing session: %w", err)
 	}
 
+	session.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsGuildMessages)
+
 	return &Bot{session}, nil
 }
 
