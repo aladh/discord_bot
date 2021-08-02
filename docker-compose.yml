@@ -8,4 +8,4 @@ services:
       SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
       SPOTIFY_REFRESH_TOKEN: ${SPOTIFY_REFRESH_TOKEN}
       SPOTIFY_PLAYLIST_ID: ${SPOTIFY_PLAYLIST_ID}
-    restart: on-failure
+    restart: unless-stopped
