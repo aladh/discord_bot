@@ -8,7 +8,7 @@ import (
 	"github.com/zmb3/spotify"
 	"golang.org/x/oauth2"
 
-	"github.com/ali-l/discord_bot/message"
+	"github.com/aladh/discord_bot/message"
 )
 
 const trackIDPattern = "open.spotify.com/track/([0-9A-Za-z_-]*)"

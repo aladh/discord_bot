@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/ali-l/discord_bot/bot"
-	"github.com/ali-l/discord_bot/config"
-	"github.com/ali-l/discord_bot/ping"
-	"github.com/ali-l/discord_bot/spotify"
+	"github.com/aladh/discord_bot/bot"
+	"github.com/aladh/discord_bot/config"
+	"github.com/aladh/discord_bot/ping"
+	"github.com/aladh/discord_bot/spotify"
 )
 
 func main() {

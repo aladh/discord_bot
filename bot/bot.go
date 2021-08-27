@@ -10,7 +10,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 
-	"github.com/ali-l/discord_bot/message"
+	"github.com/aladh/discord_bot/message"
 )
 
 const commandPrefix = "!"
