@@ -47,7 +47,7 @@ production:
 
 end-to-end:
   stage: verify
-  image: golang:1.16-buster
+  image: golang:1.17-buster
   variables:
     ENABLE_E2E_TESTS: 'true'
   script:
