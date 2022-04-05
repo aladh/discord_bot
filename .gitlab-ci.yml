@@ -81,7 +81,7 @@ production:
 
 end-to-end:
   stage: verify
-  image: golang:1.17-bullseye
+  image: golang:1.18-bullseye
   variables:
     ENABLE_E2E_TESTS: 'true'
   script:
