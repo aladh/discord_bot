@@ -79,7 +79,7 @@ production:
   except:
     - schedules
 
-end-to-end:
+prod-e2e:
   stage: verify
   image: golang:1.18-bullseye
   variables:
