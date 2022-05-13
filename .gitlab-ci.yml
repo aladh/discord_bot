@@ -29,8 +29,12 @@ end-to-end:
     ENABLE_E2E_TESTS: 1
     E2E_START_APP: 1
     E2E_DISCORD_CHANNEL_ID: $E2E_DEV_DISCORD_CHANNEL_ID
+    DISCORD_TOKEN: $DEV_DISCORD_TOKEN
   script:
     - go test -v .
+  environment:
+    name: production
+    action: access
   except:
     - schedules
 
@@ -78,6 +82,7 @@ production:
   image: ubuntu:focal
   variables:
     DOCKER_HOST: "ssh://${USER_AT_HOST}"
+    DISCORD_TOKEN: $PROD_DISCORD_TOKEN
   before_script:
     - apt-get update > /dev/null && apt-get install -y curl gnupg openssh-client netcat docker.io > /dev/null
     - *setup-tailscale
@@ -97,7 +102,11 @@ prod-end-to-end:
   variables:
     ENABLE_E2E_TESTS: 1
     E2E_DISCORD_CHANNEL_ID: $E2E_PROD_DISCORD_CHANNEL_ID
+    DISCORD_TOKEN: $DEV_DISCORD_TOKEN
   script:
     - go test -v .
+  environment:
+    name: production
+    action: verify
   only:
     - master
