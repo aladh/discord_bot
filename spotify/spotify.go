@@ -11,7 +11,7 @@ import (
 	"github.com/aladh/discord_bot/message"
 )
 
-const trackIDPattern = "open.spotify.com/track/([0-9A-Za-z_-]*)"
+const trackIDPattern = "https://open\\.spotify\\.com/track/([0-9A-Za-z]*)"
 
 type Client struct {
 	spotify.Client
