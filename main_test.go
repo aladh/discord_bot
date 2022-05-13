@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/zmb3/spotify"
@@ -16,6 +17,13 @@ func TestSpotifyAddToPlaylist(t *testing.T) {
 	_, enabled := os.LookupEnv("ENABLE_E2E_TESTS")
 	if !enabled {
 		t.Skip("End to end tests are not enabled")
+	}
+
+	_, startApp := os.LookupEnv("E2E_START_APP")
+	if startApp {
+		// Start bot and wait for it to connect
+		go main()
+		time.Sleep(5 * time.Second)
 	}
 
 	cfg, err := config.FromEnv()
