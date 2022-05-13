@@ -22,6 +22,18 @@ lint:
   except:
     - schedules
 
+end-to-end:
+  stage: test
+  image: golang:1.18-bullseye
+  variables:
+    ENABLE_E2E_TESTS: 1
+    E2E_START_APP: 1
+    E2E_DISCORD_CHANNEL_ID: $E2E_DEV_DISCORD_CHANNEL_ID
+  script:
+    - go test -v .
+  except:
+    - schedules
+
 container-image:
   stage: build
   image: docker:latest
@@ -79,12 +91,13 @@ production:
   except:
     - schedules
 
-prod-e2e:
+prod-end-to-end:
   stage: verify
   image: golang:1.18-bullseye
   variables:
-    ENABLE_E2E_TESTS: 'true'
+    ENABLE_E2E_TESTS: 1
+    E2E_DISCORD_CHANNEL_ID: $E2E_PROD_DISCORD_CHANNEL_ID
   script:
-    - go test -v main_test.go
+    - go test -v .
   only:
     - master
