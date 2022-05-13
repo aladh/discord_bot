@@ -2,8 +2,6 @@ package message
 
 import (
 	"fmt"
-	"time"
-
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -41,13 +39,4 @@ func (message *Message) React(reaction string) error {
 	}
 
 	return nil
-}
-
-func (message *Message) CreatedAt() (time.Time, error) {
-	timestamp, err := message.Timestamp.Parse()
-	if err != nil {
-		return time.Time{}, fmt.Errorf("error parsing timestamp: %w", err)
-	}
-
-	return timestamp, nil
 }

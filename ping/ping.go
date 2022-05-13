@@ -14,19 +14,7 @@ func ReplyWithLatency(message *message.Message) {
 		return
 	}
 
-	messageCreatedAt, err := message.CreatedAt()
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	replyCreatedAt, err := reply.CreatedAt()
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	err = reply.Edit(fmt.Sprintf("Pong! (%dms)", replyCreatedAt.Sub(messageCreatedAt).Milliseconds()))
+	err = reply.Edit(fmt.Sprintf("Pong! (%dms)", reply.Timestamp.Sub(message.Timestamp).Milliseconds()))
 	if err != nil {
 		log.Println(err)
 	}
