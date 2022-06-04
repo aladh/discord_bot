@@ -33,6 +33,9 @@ func TestSpotifyAddToPlaylist(t *testing.T) {
 
 	sendAndDeleteSpotifyLink(t, cfg.DiscordToken, os.Getenv("E2E_DISCORD_CHANNEL_ID"), os.Getenv("E2E_SPOTIFY_TRACK_LINK"))
 
+	// Wait for track to be added to playlist
+	time.Sleep(1 * time.Second)
+
 	spotifyClient := createSpotifyClient(cfg)
 
 	track := getLastTrack(t, spotifyClient, cfg.SpotifyPlaylistID)
