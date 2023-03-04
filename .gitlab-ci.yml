@@ -73,8 +73,10 @@ container-image:
   - tailscale up --authkey=${TAILSCALE_AUTHKEY} --hostname=gitlab-runner --timeout 10s
 
 .setup-docker: &setup-docker
-  - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &> /dev/null
-  - chmod +x /usr/local/bin/docker-compose
+  - DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+  - mkdir -p $DOCKER_CONFIG/cli-plugins
+  - curl -sSL "https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m)" -o $DOCKER_CONFIG/cli-plugins/docker-compose
+  - chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY &> /dev/null
 
 production:
@@ -89,7 +91,7 @@ production:
     - *setup-ssh
     - *setup-docker
   script:
-    - docker-compose up -d
+    - docker compose up -d
   environment: production
   only:
     - master
