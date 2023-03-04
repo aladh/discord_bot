@@ -91,7 +91,7 @@ production:
     - *setup-ssh
     - *setup-docker
   script:
-    - docker compose up -d
+    - docker compose up -d --wait
   environment: production
   only:
     - master
