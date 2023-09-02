@@ -70,7 +70,7 @@ container-image:
   - apt-get install -y tailscale > /dev/null
   - tailscaled --tun=userspace-networking --outbound-http-proxy-listen=localhost:1055 &> /dev/null &
   - sleep 5
-  - tailscale up --authkey=${TAILSCALE_AUTHKEY} --hostname=gitlab-runner --timeout 10s
+  - tailscale up --authkey=${TAILSCALE_AUTHKEY} --advertise-tags=tag:gitlab-runner --hostname=gitlab-runner
 
 .setup-docker: &setup-docker
   - DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
