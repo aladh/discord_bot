@@ -1,6 +1,9 @@
 module github.com/aladh/discord_bot
 
-go 1.23
+go 1.23.0
+
+toolchain go1.24.1
+
 require (
 	github.com/bwmarrin/discordgo v0.27.1
 	github.com/zmb3/spotify v1.3.0
