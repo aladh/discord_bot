@@ -10,6 +10,9 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
+variables:
+  GITLAB_ADVANCED_SAST_ENABLED: 'true'
+
 container_scanning:
   variables:
     CS_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
