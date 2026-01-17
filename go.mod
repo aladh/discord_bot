@@ -1,6 +1,6 @@
 module github.com/aladh/discord_bot
 
-go 1.24.1
+go 1.25.6
 
 require (
 	github.com/bwmarrin/discordgo v0.27.1
