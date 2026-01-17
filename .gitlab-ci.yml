@@ -43,13 +43,15 @@ end-to-end:
 
 container-image:
   stage: build
+  needs: []
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      command: ['--mtu=1400']
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker buildx build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" --platform linux/arm64 .
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" .
     - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" $CI_REGISTRY_IMAGE
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
     - docker push $CI_REGISTRY_IMAGE
@@ -57,6 +59,7 @@ container-image:
     - master
   except:
     - schedules
+  tags: [saas-linux-large-arm64]
 
 .setup-ssh: &setup-ssh
   - eval $(ssh-agent -s) > /dev/null
