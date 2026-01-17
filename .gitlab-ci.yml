@@ -12,6 +12,9 @@ include:
 
 variables:
   GITLAB_ADVANCED_SAST_ENABLED: 'true'
+  # Keep in sync with go.mod "go" directive.
+  GO_VERSION: '1.25.6'
+  GOLANGCI_LINT_VERSION: 'v1.64.0'
 
 container_scanning:
   variables:
@@ -19,15 +22,16 @@ container_scanning:
 
 lint:
   stage: test
-  image: golangci/golangci-lint:v1.64
+  image: golang:${GO_VERSION}-trixie
   script:
+    - go install github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_LINT_VERSION}
     - golangci-lint run -v -E gofmt -E goconst -E gocritic -E gocognit -E gocyclo
   except:
     - schedules
 
 end-to-end:
   stage: test
-  image: golang:1.25.6-trixie
+  image: golang:${GO_VERSION}-trixie
   variables:
     ENABLE_E2E_TESTS: 1
     E2E_START_APP: 1
@@ -103,7 +107,7 @@ production:
 
 prod-end-to-end:
   stage: verify
-  image: golang:1.25.6-trixie
+  image: golang:${GO_VERSION}-trixie
   variables:
     ENABLE_E2E_TESTS: 1
     E2E_DISCORD_CHANNEL_ID: $E2E_PROD_DISCORD_CHANNEL_ID
