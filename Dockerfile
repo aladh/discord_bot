@@ -1,4 +1,4 @@
-FROM golang:1.24-bookworm AS build
+FROM golang:1.25.6-trixie AS build
 
 WORKDIR /go/src/app
 ADD . /go/src/app

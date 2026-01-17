@@ -27,7 +27,7 @@ lint:
 
 end-to-end:
   stage: test
-  image: golang:1.24-bookworm
+  image: golang:1.25.6-trixie
   variables:
     ENABLE_E2E_TESTS: 1
     E2E_START_APP: 1
@@ -103,7 +103,7 @@ production:
 
 prod-end-to-end:
   stage: verify
-  image: golang:1.24-bookworm
+  image: golang:1.25.6-trixie
   variables:
     ENABLE_E2E_TESTS: 1
     E2E_DISCORD_CHANNEL_ID: $E2E_PROD_DISCORD_CHANNEL_ID
