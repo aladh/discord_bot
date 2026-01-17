@@ -4,6 +4,6 @@ WORKDIR /go/src/app
 ADD . /go/src/app
 RUN go build -o /go/bin/app
 
-FROM gcr.io/distroless/base-debian12
+FROM gcr.io/distroless/base-debian13
 COPY --from=build /go/bin/app /
 CMD ["/app"]
