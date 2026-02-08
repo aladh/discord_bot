@@ -4,7 +4,7 @@ go 1.25.6
 
 require (
 	github.com/bwmarrin/discordgo v0.29.0
-	github.com/zmb3/spotify v1.3.0
+	github.com/zmb3/spotify/v2 v2.4.3
 	golang.org/x/oauth2 v0.34.0
 )
 
