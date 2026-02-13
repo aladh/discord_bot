@@ -1,13 +1,15 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 	"testing"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/zmb3/spotify"
+	"github.com/zmb3/spotify/v2"
+	spotifyauth "github.com/zmb3/spotify/v2/auth"
 	"golang.org/x/oauth2"
 
 	"github.com/aladh/discord_bot/config"
@@ -45,35 +47,38 @@ func TestSpotifyAddToPlaylist(t *testing.T) {
 		t.Fatalf("track = %s, want %s", track.Name, expectedTrackName)
 	}
 
-	_, err = spotifyClient.RemoveTracksFromPlaylist(spotify.ID(cfg.SpotifyPlaylistID), track.ID)
+	_, err = spotifyClient.RemoveTracksFromPlaylist(context.Background(), spotify.ID(cfg.SpotifyPlaylistID), track.ID)
 	if err != nil {
 		t.Fatalf("error removing track %s from playlist: %s", track.Name, err)
 	}
 }
 
-func getLastTrack(t *testing.T, client spotify.Client, playlistID string) *spotify.FullTrack {
-	playlist, err := client.GetPlaylist(spotify.ID(playlistID))
+func getLastTrack(t *testing.T, client *spotify.Client, playlistID string) *spotify.FullTrack {
+	playlist, err := client.GetPlaylist(context.Background(), spotify.ID(playlistID))
 	if err != nil {
 		t.Fatalf("error getting playlist: %s", err)
 	}
 
-	lastTrack := playlist.Tracks.Total - 1
-	limit := int(1)
+	lastTrack := int(playlist.Tracks.Total) - 1
+	limit := 1
 
-	tracks, err := client.GetPlaylistTracksOpt(spotify.ID(playlistID), &spotify.Options{Limit: &limit, Offset: &lastTrack}, "items(track(id,name))")
+	items, err := client.GetPlaylistItems(context.Background(), spotify.ID(playlistID), spotify.Limit(limit), spotify.Offset(lastTrack), spotify.Fields("items(track(id,name))"))
 	if err != nil {
 		t.Fatalf("error getting playlist tracks: %s", err)
 	}
 
-	return &tracks.Tracks[0].Track
+	return items.Items[0].Track.Track
 }
 
-func createSpotifyClient(cfg *config.Config) spotify.Client {
-	auth := spotify.NewAuthenticator("", spotify.ScopePlaylistModifyPublic)
-	auth.SetAuthInfo(cfg.SpotifyClientID, cfg.SpotifyClientSecret)
-	client := auth.NewClient(&oauth2.Token{TokenType: "Bearer", RefreshToken: cfg.SpotifyRefreshToken})
+func createSpotifyClient(cfg *config.Config) *spotify.Client {
+	auth := spotifyauth.New(
+		spotifyauth.WithClientID(cfg.SpotifyClientID),
+		spotifyauth.WithClientSecret(cfg.SpotifyClientSecret),
+		spotifyauth.WithScopes(spotifyauth.ScopePlaylistModifyPublic),
+	)
+	httpClient := auth.Client(context.Background(), &oauth2.Token{TokenType: "Bearer", RefreshToken: cfg.SpotifyRefreshToken})
 
-	return client
+	return spotify.New(httpClient)
 }
 
 func sendAndDeleteSpotifyLink(t *testing.T, token string, channelID string, trackLink string) {

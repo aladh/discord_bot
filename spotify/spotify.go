@@ -1,11 +1,13 @@
 package spotify
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"regexp"
 
-	"github.com/zmb3/spotify"
+	"github.com/zmb3/spotify/v2"
+	spotifyauth "github.com/zmb3/spotify/v2/auth"
 	"golang.org/x/oauth2"
 
 	"github.com/aladh/discord_bot/message"
@@ -14,17 +16,20 @@ import (
 const trackIDPattern = "https://open\\.spotify\\.com/track/([0-9A-Za-z]*)"
 
 type Client struct {
-	spotify.Client
+	*spotify.Client
 	playlistID   spotify.ID
 	trackIDRegex *regexp.Regexp
 }
 
 func New(clientID, clientSecret, refreshToken, playlistID string) *Client {
-	auth := spotify.NewAuthenticator("", spotify.ScopePlaylistModifyPublic)
+	auth := spotifyauth.New(
+		spotifyauth.WithClientID(clientID),
+		spotifyauth.WithClientSecret(clientSecret),
+		spotifyauth.WithScopes(spotifyauth.ScopePlaylistModifyPublic),
+	)
 
-	auth.SetAuthInfo(clientID, clientSecret)
-
-	client := auth.NewClient(&oauth2.Token{TokenType: "Bearer", RefreshToken: refreshToken})
+	httpClient := auth.Client(context.Background(), &oauth2.Token{TokenType: "Bearer", RefreshToken: refreshToken})
+	client := spotify.New(httpClient)
 
 	return &Client{Client: client, playlistID: spotify.ID(playlistID), trackIDRegex: regexp.MustCompile(trackIDPattern)}
 }
@@ -35,7 +40,7 @@ func (client *Client) AddToPlaylist(message *message.Message) {
 		return
 	}
 
-	_, err = client.AddTracksToPlaylist(client.playlistID, trackID)
+	_, err = client.AddTracksToPlaylist(context.Background(), client.playlistID, trackID)
 	if err != nil {
 		log.Println(err)
 	}
